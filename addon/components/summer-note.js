@@ -12,7 +12,7 @@ const {
 
 let SummerNoteComponent = Component.extend({
 
-  classNames: ['wysiwyg-editor'],
+  classNames: ['wysiwyg-editor', 'summernote'],
   btnSize: 'btn-xs',
   height: 120,
   focus: false,
@@ -39,7 +39,7 @@ let SummerNoteComponent = Component.extend({
   },
 
   willDestroyElement: function() {
-    this.$('#summernote').summernote('destroy');
+    this.$('.summernote').summernote('destroy');
     // Logger.debug('summernote("destroy")');
   },
 
@@ -68,7 +68,7 @@ let SummerNoteComponent = Component.extend({
     assert("summernote has to exist on Ember.$.fn.summernote", typeof Ember.$.fn.summernote === "function" );
     assert("tooltip has to exist on Ember.$.fn.tooltip", typeof Ember.$.fn.tooltip === "function" );
 
-    this.$('#summernote').summernote({
+    this.$('.summernote').summernote({
       height: _height,
       focus: _focus,
       lang: _lang,
@@ -83,15 +83,15 @@ let SummerNoteComponent = Component.extend({
     this.$('.btn').addClass(_btnSize);
 
     let _content = this.get('content');
-    this.$('#summernote').summernote('code', _content);
+    this.$('.summernote').summernote('code', _content);
   },
 
   didUpdate() {
-    let _editorText = this.$('#summernote').summernote('code');
+    let _editorText = this.$('.summernote').summernote('code');
     let _newText = get(this, 'content');
 
     if (!isEqual(_editorText, _newText)) {
-      this.$('#summernote').summernote('code', _newText);
+      this.$('.summernote').summernote('code', _newText);
     }
   },
 
