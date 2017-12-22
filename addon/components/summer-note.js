@@ -12,6 +12,7 @@ const {
 
 let SummerNoteComponent = Component.extend({
 
+  classNames: ['wysiwyg-editor'],
   btnSize: 'btn-xs',
   height: 120,
   focus: false,
