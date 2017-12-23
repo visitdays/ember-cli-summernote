@@ -58,7 +58,7 @@ let SummerNoteComponent = Component.extend({
     let _toolbar        = this.getToolbarOptions(this.get('toolbarOptions'));
     let _callbacks      = get(this, 'callbacks');
 
-    _callbacks.onChange = function(){
+    _callbacks.onChange = function(text){
       let _onContentChange = this.get('onContentChange');
       debugger;
       if (!isEmpty(_onContentChange)) {
