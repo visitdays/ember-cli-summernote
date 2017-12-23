@@ -30,17 +30,27 @@ let SummerNoteComponent = Component.extend({
     return applicationConfig;
   }),
 
+  identifier: Ember.computed('id', function(){
+    let id = this.get('id');
+    if(id){
+      return `#${id}`;
+    }
+    return '#summernote';
+  }),
+
   onChange(text) {
     Logger.debug(`onChange callback. text: ${text}`);
     let _onContentChange = this.get('onContentChange');
+    debugger;
     if (!isEmpty(_onContentChange)) {
-      _onContentChange(text);
+      _onContentChange.call(text);
     }
   },
 
   willDestroyElement: function() {
-    this.$('#summernote').summernote('destroy');
-    // Logger.debug('summernote("destroy")');
+    let id = get(this, 'identifier');
+    this.$(id).summernote('destroy');
+    Logger.debug('summernote("destroy")');
   },
 
   didInsertElement: function() {
@@ -52,8 +62,9 @@ let SummerNoteComponent = Component.extend({
     let _lang           = get(this, 'config')['ember-cli-summernote'].lang;
     let _toolbar        = this.getToolbarOptions(this.get('toolbarOptions'));
     let _callbacks      = get(this, 'callbacks');
-    _callbacks.onChange = this.get('onChange').bind(this);
 
+    _callbacks.onChange = this.get('onChange').bind(this);
+    debugger;
     let _customButtons = {};
     let arrayOfCustomButtons = get(this, 'customButtons');
     if (arrayOfCustomButtons) {
@@ -63,12 +74,13 @@ let SummerNoteComponent = Component.extend({
       });
     }
 
+    let id = get(this, 'identifier');
     //
     // Ensure summernote is loaded
     assert("summernote has to exist on Ember.$.fn.summernote", typeof Ember.$.fn.summernote === "function" );
     assert("tooltip has to exist on Ember.$.fn.tooltip", typeof Ember.$.fn.tooltip === "function" );
 
-    this.$('#summernote').summernote({
+    this.$(id).summernote({
       height: _height,
       focus: _focus,
       lang: _lang,
@@ -83,15 +95,16 @@ let SummerNoteComponent = Component.extend({
     this.$('.btn').addClass(_btnSize);
 
     let _content = this.get('content');
-    this.$('#summernote').summernote('code', _content);
+    this.$(id).summernote('code', _content);
   },
 
   didUpdate() {
-    let _editorText = this.$('#summernote').summernote('code');
+    let id = get(this, 'identifier');
+    let _editorText = this.$(id).summernote('code');
     let _newText = get(this, 'content');
 
     if (!isEqual(_editorText, _newText)) {
-      this.$('#summernote').summernote('code', _newText);
+      this.$(id).summernote('code', _newText);
     }
   },
 
