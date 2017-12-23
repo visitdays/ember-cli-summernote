@@ -30,12 +30,16 @@ let SummerNoteComponent = Component.extend({
     return applicationConfig;
   }),
 
-  identifier: Ember.computed('id', function(){
+  identifier: Ember.computed('identifier', function(){
+    return `#${get(this,'id')}`
+  }),
+
+  id: Ember.computed('id', function(){
     let id = this.get('id');
     if(id){
-      return `#${id}`;
+      return id;
     }
-    return '#summernote';
+    return 'summernote';
   }),
 
   onChange(text) {
