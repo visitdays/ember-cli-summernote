@@ -58,12 +58,13 @@ let SummerNoteComponent = Component.extend({
     let _toolbar        = this.getToolbarOptions(this.get('toolbarOptions'));
     let _callbacks      = get(this, 'callbacks');
 
-    _callbacks.onChange = function(){ 
+    _callbacks.onChange = function(){
       let _onContentChange = this.get('onContentChange');
       debugger;
       if (!isEmpty(_onContentChange)) {
         _onContentChange.call(text);
-      }.bind(this);
+      }
+    }.bind(this);
 
     let _customButtons = {};
     let arrayOfCustomButtons = get(this, 'customButtons');
