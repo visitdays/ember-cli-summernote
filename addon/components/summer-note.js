@@ -42,15 +42,6 @@ let SummerNoteComponent = Component.extend({
     return 'summernote';
   }),
 
-  onChange(text) {
-    Logger.debug(`onChange callback. text: ${text}`);
-    let _onContentChange = this.get('onContentChange');
-    debugger;
-    if (!isEmpty(_onContentChange)) {
-      _onContentChange.call(text);
-    }
-  },
-
   willDestroyElement: function() {
     let id = get(this, 'identifier');
     this.$(id).summernote('destroy');
@@ -67,8 +58,13 @@ let SummerNoteComponent = Component.extend({
     let _toolbar        = this.getToolbarOptions(this.get('toolbarOptions'));
     let _callbacks      = get(this, 'callbacks');
 
-    _callbacks.onChange = this.get('onChange').bind(this);
-    debugger;
+    _callbacks.onChange = function(){ 
+      let _onContentChange = this.get('onContentChange');
+      debugger;
+      if (!isEmpty(_onContentChange)) {
+        _onContentChange.call(text);
+      }.bind(this);
+
     let _customButtons = {};
     let arrayOfCustomButtons = get(this, 'customButtons');
     if (arrayOfCustomButtons) {
