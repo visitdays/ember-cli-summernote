@@ -57,14 +57,9 @@ let SummerNoteComponent = Component.extend({
     let _lang           = get(this, 'config')['ember-cli-summernote'].lang;
     let _toolbar        = this.getToolbarOptions(this.get('toolbarOptions'));
     let _callbacks      = get(this, 'callbacks');
+    let _onContentChange = this.get('onContentChange');
 
-    _callbacks.onChange = function(text){
-      let _onContentChange = this.get('onContentChange');
-      debugger;
-      if (!isEmpty(_onContentChange)) {
-        _onContentChange.call(text);
-      }
-    }.bind(this);
+    _callbacks.onChange = _onContentChange.bind(this);
 
     let _customButtons = {};
     let arrayOfCustomButtons = get(this, 'customButtons');
